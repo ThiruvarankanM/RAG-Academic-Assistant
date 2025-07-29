@@ -65,6 +65,10 @@ if st.button("Generate Knowledge Base"):
         )
         chunks = splitter.split_documents(all_docs)
 
+        # Add UUID to each chunk metadata
+        for chunk in chunks:
+            chunk.metadata["id"] = str(uuid4())
+
         # Save to Chroma DB (overwrite existing DB)
         vector_store = Chroma.from_documents(
             documents=chunks,
